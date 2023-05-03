@@ -39,9 +39,6 @@ export default class Home extends Component {
         console.log(Math.floor(Math.random() * (1008 - 1) + 1))
         const newPokeNumber = Math.floor(Math.random() * (1008 - 1) + 1)
         const pokeName = this.getPokemon(newPokeNumber)
-        
-
-
     }}
     >
         Get New Pokemon

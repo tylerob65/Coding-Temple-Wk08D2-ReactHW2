@@ -7,14 +7,17 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-// import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import RocketIcon from '@mui/icons-material/Rocket';
 import TagFacesIcon from '@mui/icons-material/TagFaces';
+import { Link } from 'react-router-dom';
 
-const pages = ['Page1', 'Page2', 'Page3'];
+const pages = [
+    {pageName:'Todo',pageLink:'/todo'}, 
+    {pageName:'Page2',pageLink:'/'}
+];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar(props) {
@@ -56,7 +59,9 @@ function ResponsiveAppBar(props) {
                             textDecoration: 'none',
                         }}
                     >
+                        <Link to='/' style={{ mr: 'inherit', display: 'inherit', flexGrow: 'inherit', fontFamily: 'inherit', fontWeight: 'inherit', letterSpacing: 'inherit', color: 'inherit', textDecoration: 'inherit' }}>
                         Dactyl Inc.
+                        </Link>
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -89,9 +94,11 @@ function ResponsiveAppBar(props) {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                <Link to={page.pageLink} style={{ textDecoration: 'none' }}>
+                                <MenuItem key={page.pageName} onClick={handleCloseNavMenu} >
+                                    <Typography textAlign="center">{page.pageName}</Typography>
                                 </MenuItem>
+                                </Link>
                             ))}
                         </Menu>
                     </Box>
@@ -100,7 +107,8 @@ function ResponsiveAppBar(props) {
                         variant="h5"
                         noWrap
                         component="a"
-                        href=""
+                        
+                        href={<Link to=''/>}
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -112,17 +120,22 @@ function ResponsiveAppBar(props) {
                             textDecoration: 'none',
                         }}
                     >
+                        <Link to='/' style={{ mr: 'inherit', display: 'inherit', flexGrow:'inherit',fontFamily: 'inherit', fontWeight: 'inherit', letterSpacing:'inherit',color: 'inherit',textDecoration:'inherit' }}>
                         Dactyl Inc.
+                    </Link>
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
+                            <Link to={page.pageLink} style={{textDecoration:'none'}}>
                             <Button
-                                key={page}
+                                key={page.pageName}
+                                href={page.pageLink}
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                {page}
+                                {page.pageName}
                             </Button>
+                            </Link>
                         ))}
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
