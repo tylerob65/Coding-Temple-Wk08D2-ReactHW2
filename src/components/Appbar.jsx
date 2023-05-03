@@ -48,7 +48,7 @@ function ResponsiveAppBar(props) {
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+                        
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -94,8 +94,8 @@ function ResponsiveAppBar(props) {
                             }}
                         >
                             {pages.map((page) => (
-                                <Link to={page.pageLink} style={{ textDecoration: 'none' }}>
-                                <MenuItem key={page.pageName} onClick={handleCloseNavMenu} >
+                                <Link key={page.pageName} to={page.pageLink} style={{ textDecoration: 'none' }}>
+                                <MenuItem onClick={handleCloseNavMenu} >
                                     <Typography textAlign="center">{page.pageName}</Typography>
                                 </MenuItem>
                                 </Link>
@@ -108,7 +108,7 @@ function ResponsiveAppBar(props) {
                         noWrap
                         component="a"
                         
-                        href={<Link to=''/>}
+                        
                         sx={{
                             mr: 2,
                             display: { xs: 'flex', md: 'none' },
@@ -126,10 +126,9 @@ function ResponsiveAppBar(props) {
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
-                            <Link to={page.pageLink} style={{textDecoration:'none'}}>
+                            <Link key={page.pageName} to={page.pageLink} style={{textDecoration:'none'}}>
                             <Button
-                                key={page.pageName}
-                                href={page.pageLink}
+                                
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >

@@ -2,6 +2,7 @@ import BasicCard from '../components/Card'
 import React, { Component } from 'react'
 import { Box,Button } from '@mui/material';
 
+
 export default class Home extends Component {
     constructor() {
         super();
