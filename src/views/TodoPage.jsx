@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { TextField, Button } from '@mui/material';
 import TodoList from '../components/TodoList';
 
+
 export default class TodoPage extends Component {
 	constructor() {
 		super();
@@ -13,17 +14,32 @@ export default class TodoPage extends Component {
 
 	handleChange = (e) => {
 		this.setState({ todoInputText: e.target.value })
-		// console.log(e.target.value)
+		// console.log(e.target.value,"here is console value")
 	}
 
 	addToTodoListItems = (e) => {
-		
-		const newTodoListItems = [...this.state.todoListItems]
+		const currentTodoListItems = this.state.todoListItems
+		let newTodoListItems = []
+		for (let i=0;i<currentTodoListItems.length;i++) {
+			newTodoListItems.push(currentTodoListItems[i])
+		}
 		
 		// newTodoListItems.push({text:e.target[0].value,complete:false})
-		newTodoListItems.push(e.target[0].value,false)
+		newTodoListItems.push([e.target[0].value,false])
 		this.setState({ todoListItems: newTodoListItems })
 		console.log(this.state.todoListItems)
+	}
+
+	makeTodoItem = (todoPair) => {
+		return (
+			<div>
+				{todoPair}
+			</div>
+		)
+	}
+
+	makePrint = (val) => {
+		console.log(val)
 	}
 
 	render() {
@@ -31,11 +47,15 @@ export default class TodoPage extends Component {
 			<div className='side-margin'>
 				<br />
 				<h1>Todo List</h1>
+				
+				{/* {this.state.todoListItems.forEach(this.makeTodoItem)} */}
+				
 				<TodoList todoItems={this.state.todoListItems}/>
 				<br />
-				<form action="" onSubmit={(e) => {
+				<form style={{display:'flex',alignItems:'center'}}
+				onSubmit={(e) => {
 					e.preventDefault()
-					console.log(e)
+					// console.log(e)
 					this.addToTodoListItems(e)
 				}}>	
 					<TextField
@@ -49,7 +69,11 @@ export default class TodoPage extends Component {
 				</form>
 
 				<br />
-				hello
+				{/* <div>
+					{this.state.todoListItems.map(this.makeTodoItem)}
+				</div> */}
+				
+				
 			</div>
 		)
 	}
