@@ -1,42 +1,22 @@
-import React, { Component } from 'react'
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import IconButton from '@mui/material/IconButton';
+import React from 'react'
+import TodoItem from './TodoItem';
 
-export default class TodoList extends Component {
-  renderToDoItems = ([todoItem,todoCompleted]) => {
-    if (todoCompleted) {
-        todoCompleted = true
-        return (
-            <>
-            <IconButton>
-                <CheckBoxIcon/>
-            </IconButton>
-            <p>{{todoItem}}</p>
-            </>
-        )
-    } else {
-        return (
-            <div style={{display:'flex',alignItems:'center'}}>
-            <IconButton>
-                <CheckBoxOutlineBlankIcon />
-            </IconButton>
-            <p style={{margin:'0'}}>{todoItem}</p>
-            </div >
-        )
-    }
-  }
-  render() {
+export default function TodoList({ todoListItems, toggleTodoItem }) {
     return (
-      <div>
-        TodoList
-        <br />
-        {this.props.todoItems.map((todoPair) => {
-            return (this.renderToDoItems(todoPair))
-        })}
-        <br />
-
-      </div>
+        <div>
+            <br />
+            {todoListItems.map(([todoItemText, todoStatus], todoIndex) => {
+                return (
+                    <TodoItem
+                        key={todoIndex}
+                        todoItemText={todoItemText}
+                        todoStatus={todoStatus}
+                        todoIndex={todoIndex}
+                        toggleTodoItem={toggleTodoItem}
+                    />
+                )
+            })}
+            <br />
+        </div>
     )
-  }
 }

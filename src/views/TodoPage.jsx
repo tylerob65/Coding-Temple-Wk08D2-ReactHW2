@@ -1,80 +1,107 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { TextField, Button } from '@mui/material';
 import TodoList from '../components/TodoList';
+import { Container } from '@mui/material';
+
+export default function TodoPage() {
+
+    const [todoInputText, setTodoInputText] = useState("")
+    const [todoListItems, setTodoListItems] = useState([])
 
 
-export default class TodoPage extends Component {
-	constructor() {
-		super();
-		this.state = {
-			todoInputText: '',
-			todoListItems: [],
-		};
-	}
+    const handleChange = (e) => {
+        setTodoInputText(e.target.value)
+    }
 
-	handleChange = (e) => {
-		this.setState({ todoInputText: e.target.value })
-		// console.log(e.target.value,"here is console value")
-	}
+    const toggleTodoItem = (i) => {
+        const newTodoItemsList = []
 
-	addToTodoListItems = (e) => {
-		const currentTodoListItems = this.state.todoListItems
-		let newTodoListItems = []
-		for (let i=0;i<currentTodoListItems.length;i++) {
-			newTodoListItems.push(currentTodoListItems[i])
-		}
-		
-		// newTodoListItems.push({text:e.target[0].value,complete:false})
-		newTodoListItems.push([e.target[0].value,false])
-		this.setState({ todoListItems: newTodoListItems })
-		console.log(this.state.todoListItems)
-	}
+        todoListItems.forEach((items, index) => {
+            // console.log(items, index, i)
+            if (index !== i) {
+                newTodoItemsList.push(items);
+            } else {
+                newTodoItemsList.push([items[0], !items[1]])
+            }
+        })
+        setTodoListItems(newTodoItemsList)
+    }
 
-	makeTodoItem = (todoPair) => {
-		return (
-			<div>
-				{todoPair}
-			</div>
-		)
-	}
+    const clearCompleteTodos = () => {
+        const newTodoList = []
+        todoListItems.forEach((items) => {
+            if (!items[1]) {
+                newTodoList.push(items)
+            }
+        }
+        )
+        setTodoListItems(newTodoList)
+    }
 
-	makePrint = (val) => {
-		console.log(val)
-	}
+    const resetTodoList = () => {
+        setTodoListItems([])
+    }
 
-	render() {
-		return (
-			<div className='side-margin'>
-				<br />
-				<h1>Todo List</h1>
-				
-				{/* {this.state.todoListItems.forEach(this.makeTodoItem)} */}
-				
-				<TodoList todoItems={this.state.todoListItems}/>
-				<br />
-				<form style={{display:'flex',alignItems:'center'}}
-				onSubmit={(e) => {
-					e.preventDefault()
-					// console.log(e)
-					this.addToTodoListItems(e)
-				}}>	
-					<TextField
-						variant='outlined'
-						label='Enter Todo'
-						sx={{ width: '400px' }}
-						value={this.state.todoInputText}
-						onChange={this.handleChange}
-					/>
-					<Button variant='outlined' type='submit'>Hello</Button>
-				</form>
+    const addToTodoListItems = (e) => {
+        let newTodoListItems = []
+        for (let i = 0; i < todoListItems.length; i++) {
+            newTodoListItems.push(todoListItems[i])
+        }
 
-				<br />
-				{/* <div>
-					{this.state.todoListItems.map(this.makeTodoItem)}
-				</div> */}
-				
-				
-			</div>
-		)
-	}
+        newTodoListItems.push([e.target[0].value, false])
+        setTodoListItems(newTodoListItems)
+    }
+
+    return (
+        // <div className='side-margin'>
+        <Container>
+            <br />
+            <h1>Todo List</h1>
+
+            <TodoList
+                todoListItems={todoListItems}
+                toggleTodoItem={toggleTodoItem}
+            />
+            <br />
+            <form style={{ display: 'flex', justifyContent: "start", alignItems: 'start', flexDirection: 'column' }}
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    addToTodoListItems(e)
+                }}>
+                <TextField
+                    variant='outlined'
+                    label='Enter Todo'
+                    sx={{ width: '400px' }}
+                    value={todoInputText}
+                    onChange={handleChange}
+                />
+                <br />
+                <Button
+                    variant='outlined'
+                    type='submit'
+                >
+                    Add to Todo List
+                </Button>
+                <br />
+                <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={clearCompleteTodos}
+                >
+                    Cleared Completed Todos
+                </Button>
+                <br />
+                <Button
+                variant="outlined"
+                color="error"
+                onClick={resetTodoList}
+                >
+                    Clear All Todos
+                </Button>
+            </form>
+            <br />
+            <Container sx={{pl:0}}>
+            </Container>
+        </Container>
+    )
 }
